@@ -1,0 +1,26 @@
+<h1>To-Do List</h1>
+
+<ul>
+    {% for todo_item in all_items %}
+        <li>{{todo_item.content}}
+            <form action="/deleteTodo/{{todo_item.id}}/" style = "display: inline;" method = "POST">{% csrf_token %}
+                <input type = "submit" value = "Delete"/>
+            </form>
+            <form action="/editTodo/{{todo_item.id}}/" style = "display: inline;" method = "POST">{% csrf_token %}
+                <input type = "submit" value = "Edit"/>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+
+{% if editNum != -1 %}
+    <form action="/editTodoChange/{{editNum}}/" method = "POST">{% csrf_token %}
+        <input type = "text" name = "content"/>
+        <input type = "submit" value="Edit"/>
+    </form>
+{% elif editNum == -1 %}
+    <form action="/addTodo/" method = "POST">{% csrf_token %}
+        <input type = "text" name = "content"/>
+        <input type = "submit" value="Add"/>
+    </form>
+{% endif %}
